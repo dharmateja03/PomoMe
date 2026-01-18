@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { useSession, signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { Clock, BarChart3, Sparkles, LogOut, Loader2, Settings as SettingsIcon } from 'lucide-react';
 import { Timer } from '@/components/Timer';
 import { CategorySelector } from '@/components/CategorySelector';
@@ -10,6 +9,7 @@ import { ProgressMeter } from '@/components/ProgressMeter';
 import { History } from '@/components/History';
 import { Analytics } from '@/components/Analytics';
 import { Settings } from '@/components/Settings';
+import { LandingPage } from '@/components/LandingPage';
 import { useApiCategories } from '@/hooks/useApiCategories';
 import { useApiSessions } from '@/hooks/useApiSessions';
 import { useSettings } from '@/hooks/useSettings';
@@ -17,7 +17,6 @@ import { type Category } from '@/lib/db/schema';
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const router = useRouter();
   const { categories, loading: categoriesLoading, addCategory, deleteCategory } = useApiCategories();
   const { sessions, loading: sessionsLoading, addSession, getTotalTimeByCategory } = useApiSessions();
   const { settings, updateSettings, resetSettings, loaded: settingsLoaded } = useSettings();
@@ -26,13 +25,6 @@ export default function Home() {
   const [showHistory, setShowHistory] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login');
-    }
-  }, [status, router]);
 
   // Auto-select first category if none selected
   useEffect(() => {
@@ -43,10 +35,10 @@ export default function Home() {
 
   // Request notification permission
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'Notification' in window) {
+    if (typeof window !== 'undefined' && 'Notification' in window && status === 'authenticated') {
       Notification.requestPermission();
     }
-  }, []);
+  }, [status]);
 
   const handleSessionComplete = useCallback(
     async (duration: number) => {
@@ -83,12 +75,16 @@ export default function Home() {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    router.push('/login');
   };
 
   const selectedCategoryTime = selectedCategory?.id
     ? getTotalTimeByCategory(selectedCategory.id)
     : 0;
+
+  // Show landing page for unauthenticated users
+  if (status === 'unauthenticated') {
+    return <LandingPage />;
+  }
 
   // Loading state
   if (status === 'loading' || categoriesLoading || sessionsLoading || !settingsLoaded) {
@@ -100,11 +96,6 @@ export default function Home() {
         </div>
       </div>
     );
-  }
-
-  // Don't render if not authenticated
-  if (status === 'unauthenticated') {
-    return null;
   }
 
   return (
