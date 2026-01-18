@@ -26,14 +26,16 @@ export function Timer({
   const [isRunning, setIsRunning] = useState(false);
   const [sessionDuration, setSessionDuration] = useState(0);
   const hasCompletedRef = useRef(false);
+  const hasSavedRef = useRef(false);
 
-  // Reset timer when duration changes (only if not running)
+  // Reset timer when duration changes (only if not running and no session in progress)
   useEffect(() => {
-    if (!isRunning && sessionDuration === 0) {
+    if (!isRunning && sessionDuration === 0 && !hasCompletedRef.current) {
       setTimeLeft(totalSeconds);
     }
   }, [totalSeconds, isRunning, sessionDuration]);
 
+  // Main timer effect
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
 
@@ -43,9 +45,15 @@ export function Timer({
         setSessionDuration(prev => prev + 1);
       }, 1000);
     } else if (timeLeft === 0 && isRunning && !hasCompletedRef.current) {
+      // Timer completed naturally
       hasCompletedRef.current = true;
+      hasSavedRef.current = true;
       setIsRunning(false);
-      onComplete(sessionDuration);
+
+      // Save the completed session
+      if (sessionDuration > 0) {
+        onComplete(sessionDuration);
+      }
 
       // Play notification sound
       if (soundEnabled) {
@@ -70,20 +78,45 @@ export function Timer({
 
   const toggleTimer = useCallback(() => {
     if (isDisabled) return;
-    if (!isRunning) {
-      hasCompletedRef.current = false;
+
+    if (isRunning) {
+      // User is STOPPING the timer mid-session
+      setIsRunning(false);
+
+      // Save the partial session if they worked for at least 1 minute and haven't saved yet
+      if (sessionDuration >= 60 && !hasSavedRef.current) {
+        hasSavedRef.current = true;
+        onComplete(sessionDuration);
+      }
+    } else {
+      // User is STARTING the timer
+
+      // If timer was completed (at 0), reset it first
+      if (timeLeft === 0 || hasCompletedRef.current) {
+        setTimeLeft(totalSeconds);
+        setSessionDuration(0);
+        hasCompletedRef.current = false;
+        hasSavedRef.current = false;
+      }
+
+      setIsRunning(true);
     }
-    setIsRunning(prev => !prev);
-  }, [isDisabled, isRunning]);
+  }, [isDisabled, isRunning, sessionDuration, timeLeft, totalSeconds, onComplete]);
 
   const resetTimer = useCallback(() => {
     setIsRunning(false);
-    if (sessionDuration > 60) {
+
+    // Save session if they worked for at least 1 minute and haven't saved yet
+    if (sessionDuration >= 60 && !hasSavedRef.current) {
+      hasSavedRef.current = true;
       onComplete(sessionDuration);
     }
+
+    // Reset everything
     setTimeLeft(totalSeconds);
     setSessionDuration(0);
     hasCompletedRef.current = false;
+    hasSavedRef.current = false;
   }, [sessionDuration, onComplete, totalSeconds]);
 
   const formatTime = (seconds: number) => {
@@ -113,8 +146,8 @@ export function Timer({
 
   const getStatusText = () => {
     if (isRunning) return 'Focus Time';
-    if (timeLeft === 0) return 'Complete!';
-    if (timeLeft === totalSeconds) return 'Ready';
+    if (timeLeft === 0 || hasCompletedRef.current) return 'Complete!';
+    if (timeLeft === totalSeconds && sessionDuration === 0) return 'Ready';
     return 'Paused';
   };
 
@@ -164,7 +197,7 @@ export function Timer({
           <span className="text-sm text-zinc-500 mt-2 uppercase tracking-widest">
             {getStatusText()}
           </span>
-          {sessionDuration > 0 && !isRunning && timeLeft > 0 && (
+          {sessionDuration > 0 && !isRunning && timeLeft > 0 && !hasCompletedRef.current && (
             <span className="text-xs text-zinc-600 mt-1">
               {formatDuration(sessionDuration)} elapsed
             </span>
