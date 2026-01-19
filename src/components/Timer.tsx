@@ -5,7 +5,7 @@ import { Play, Pause, RotateCcw } from 'lucide-react';
 import { playSound, type SoundType } from '@/lib/sounds';
 
 interface TimerProps {
-  onComplete: (duration: number) => void;
+  onComplete: (duration: number, startedAt: Date) => void;
   isDisabled?: boolean;
   durationMinutes: number;
   soundEnabled: boolean;
@@ -27,6 +27,7 @@ export function Timer({
   const [sessionDuration, setSessionDuration] = useState(0);
   const hasCompletedRef = useRef(false);
   const hasSavedRef = useRef(false);
+  const sessionStartRef = useRef<Date | null>(null);
 
   // Reset timer when duration changes (only if not running and no session in progress)
   useEffect(() => {
@@ -47,12 +48,12 @@ export function Timer({
     } else if (timeLeft === 0 && isRunning && !hasCompletedRef.current) {
       // Timer completed naturally
       hasCompletedRef.current = true;
-      hasSavedRef.current = true;
       setIsRunning(false);
 
-      // Save the completed session
-      if (sessionDuration > 0) {
-        onComplete(sessionDuration);
+      // Save the completed session (only if not already saved from a pause)
+      if (sessionDuration > 0 && !hasSavedRef.current && sessionStartRef.current) {
+        hasSavedRef.current = true;
+        onComplete(sessionDuration, sessionStartRef.current);
       }
 
       // Play notification sound
@@ -84,9 +85,9 @@ export function Timer({
       setIsRunning(false);
 
       // Save the partial session if they worked for at least 1 minute and haven't saved yet
-      if (sessionDuration >= 60 && !hasSavedRef.current) {
+      if (sessionDuration >= 60 && !hasSavedRef.current && sessionStartRef.current) {
         hasSavedRef.current = true;
-        onComplete(sessionDuration);
+        onComplete(sessionDuration, sessionStartRef.current);
       }
     } else {
       // User is STARTING the timer
@@ -97,6 +98,12 @@ export function Timer({
         setSessionDuration(0);
         hasCompletedRef.current = false;
         hasSavedRef.current = false;
+        sessionStartRef.current = null;
+      }
+
+      // Set session start time if this is a fresh start
+      if (!sessionStartRef.current) {
+        sessionStartRef.current = new Date();
       }
 
       setIsRunning(true);
@@ -107,9 +114,9 @@ export function Timer({
     setIsRunning(false);
 
     // Save session if they worked for at least 1 minute and haven't saved yet
-    if (sessionDuration >= 60 && !hasSavedRef.current) {
+    if (sessionDuration >= 60 && !hasSavedRef.current && sessionStartRef.current) {
       hasSavedRef.current = true;
-      onComplete(sessionDuration);
+      onComplete(sessionDuration, sessionStartRef.current);
     }
 
     // Reset everything
@@ -117,6 +124,7 @@ export function Timer({
     setSessionDuration(0);
     hasCompletedRef.current = false;
     hasSavedRef.current = false;
+    sessionStartRef.current = null;
   }, [sessionDuration, onComplete, totalSeconds]);
 
   const formatTime = (seconds: number) => {

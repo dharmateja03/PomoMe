@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     }
 
     const userId = parseInt(session.user.id);
-    const { categoryId, duration } = await request.json();
+    const { categoryId, duration, startedAt } = await request.json();
 
     if (!categoryId || !duration) {
       return NextResponse.json({ error: 'Category ID and duration are required' }, { status: 400 });
@@ -46,6 +46,7 @@ export async function POST(request: Request) {
         userId,
         categoryId,
         duration,
+        startedAt: startedAt ? new Date(startedAt) : new Date(),
       })
       .returning();
 

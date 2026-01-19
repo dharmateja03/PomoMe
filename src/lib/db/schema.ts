@@ -22,6 +22,7 @@ export const sessions = pgTable('sessions', {
   userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   categoryId: integer('category_id').notNull().references(() => categories.id, { onDelete: 'cascade' }),
   duration: integer('duration').notNull(), // in seconds
+  startedAt: timestamp('started_at').defaultNow().notNull(),
   completedAt: timestamp('completed_at').defaultNow().notNull(),
 });
 

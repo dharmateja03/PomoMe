@@ -25,12 +25,15 @@ export function useApiSessions() {
     fetchSessions();
   }, [fetchSessions]);
 
-  const addSession = useCallback(async (session: { categoryId: number; duration: number }) => {
+  const addSession = useCallback(async (session: { categoryId: number; duration: number; startedAt?: Date }) => {
     try {
       const res = await fetch('/api/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(session),
+        body: JSON.stringify({
+          ...session,
+          startedAt: session.startedAt?.toISOString(),
+        }),
       });
       if (res.ok) {
         const newSession = await res.json();

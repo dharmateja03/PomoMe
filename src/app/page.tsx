@@ -41,12 +41,13 @@ export default function Home() {
   }, [status]);
 
   const handleSessionComplete = useCallback(
-    async (duration: number) => {
+    async (duration: number, startedAt: Date) => {
       if (!selectedCategory?.id || duration < 60) return;
 
       await addSession({
         categoryId: selectedCategory.id,
         duration,
+        startedAt,
       });
     },
     [selectedCategory, addSession]

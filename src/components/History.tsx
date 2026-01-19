@@ -49,6 +49,20 @@ export function History({ sessions, categories, onClose }: HistoryProps) {
     });
   };
 
+  const getTimezone = (date: Date) => {
+    return new Date(date).toLocaleTimeString('en-US', {
+      timeZoneName: 'short',
+    }).split(' ').pop() || '';
+  };
+
+  const formatTimeRange = (startedAt: Date | null, completedAt: Date) => {
+    const tz = getTimezone(completedAt);
+    if (startedAt) {
+      return `${formatTime(startedAt)} - ${formatTime(completedAt)} ${tz}`;
+    }
+    return `${formatTime(completedAt)} ${tz}`;
+  };
+
   // Group sessions by date
   const groupedSessions = sessions.reduce((groups, session) => {
     const dateKey = new Date(session.completedAt).toDateString();
@@ -120,7 +134,7 @@ export function History({ sessions, categories, onClose }: HistoryProps) {
                               {category.name}
                             </p>
                             <p className="text-xs text-zinc-500">
-                              {formatTime(session.completedAt)}
+                              {formatTimeRange(session.startedAt, session.completedAt)}
                             </p>
                           </div>
                           <div className="text-right">
