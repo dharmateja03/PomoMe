@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
-import { Clock, BarChart3, Sparkles, LogOut, Loader2, Settings as SettingsIcon } from 'lucide-react';
+import { Clock, BarChart3, Sparkles, LogOut, Loader2, Settings as SettingsIcon, Users, UserPlus } from 'lucide-react';
 import { Timer } from '@/components/Timer';
 import { CategorySelector } from '@/components/CategorySelector';
 import { ProgressMeter } from '@/components/ProgressMeter';
@@ -10,12 +11,16 @@ import { History } from '@/components/History';
 import { Analytics } from '@/components/Analytics';
 import { Settings } from '@/components/Settings';
 import { LandingPage } from '@/components/LandingPage';
+import { CreateRoomModal } from '@/components/rooms/CreateRoomModal';
+import { JoinRoomModal } from '@/components/rooms/JoinRoomModal';
+import { FriendsPanel } from '@/components/friends/FriendsPanel';
 import { useApiCategories } from '@/hooks/useApiCategories';
 import { useApiSessions } from '@/hooks/useApiSessions';
 import { useSettings } from '@/hooks/useSettings';
 import { type Category } from '@/lib/db/schema';
 
 export default function Home() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const { categories, loading: categoriesLoading, addCategory, deleteCategory } = useApiCategories();
   const { sessions, loading: sessionsLoading, addSession, getTotalTimeByCategory } = useApiSessions();
@@ -25,6 +30,9 @@ export default function Home() {
   const [showHistory, setShowHistory] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showCreateRoom, setShowCreateRoom] = useState(false);
+  const [showJoinRoom, setShowJoinRoom] = useState(false);
+  const [showFriends, setShowFriends] = useState(false);
 
   // Auto-select first category if none selected
   useEffect(() => {
@@ -111,13 +119,22 @@ export default function Home() {
         {/* Header */}
         <header className="text-center mb-10">
           <div className="flex items-center justify-between mb-6">
-            <button
-              onClick={() => setShowSettings(true)}
-              className="p-2 text-zinc-500 hover:text-white hover:bg-zinc-800/50 rounded-lg transition-all"
-              title="Settings"
-            >
-              <SettingsIcon size={18} />
-            </button>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setShowSettings(true)}
+                className="p-2 text-zinc-500 hover:text-white hover:bg-zinc-800/50 rounded-lg transition-all"
+                title="Settings"
+              >
+                <SettingsIcon size={18} />
+              </button>
+              <button
+                onClick={() => setShowFriends(true)}
+                className="p-2 text-zinc-500 hover:text-violet-400 hover:bg-zinc-800/50 rounded-lg transition-all"
+                title="Friends"
+              >
+                <UserPlus size={18} />
+              </button>
+            </div>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800/30 rounded-full border border-zinc-700/50">
               <Sparkles size={14} className="text-orange-400" />
               <span className="text-sm text-zinc-400">Focus Timer</span>
@@ -142,7 +159,7 @@ export default function Home() {
         </header>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-center gap-3 mb-10">
+        <div className="flex justify-center gap-3 mb-10 flex-wrap">
           <button
             onClick={() => setShowHistory(true)}
             className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800/40 hover:bg-zinc-700/40 text-zinc-300 hover:text-white rounded-xl transition-all duration-200 border border-zinc-700/50"
@@ -157,6 +174,21 @@ export default function Home() {
             <BarChart3 size={18} />
             <span className="text-sm font-medium">Analytics</span>
           </button>
+          <div className="flex flex-col items-center">
+            <button
+              onClick={() => setShowCreateRoom(true)}
+              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-500/20 to-blue-500/20 hover:from-violet-500/30 hover:to-blue-500/30 text-violet-300 hover:text-white rounded-xl transition-all duration-200 border border-violet-500/30"
+            >
+              <Users size={18} />
+              <span className="text-sm font-medium">Study Together</span>
+            </button>
+            <button
+              onClick={() => setShowJoinRoom(true)}
+              className="text-xs text-zinc-500 hover:text-violet-400 mt-1 transition-colors"
+            >
+              Have an invite code?
+            </button>
+          </div>
         </div>
 
         {/* Category Selector */}
@@ -229,6 +261,35 @@ export default function Home() {
           onUpdate={updateSettings}
           onReset={resetSettings}
           onClose={() => setShowSettings(false)}
+        />
+      )}
+
+      {showCreateRoom && (
+        <CreateRoomModal
+          isOpen={showCreateRoom}
+          onClose={() => setShowCreateRoom(false)}
+          onRoomCreated={(roomId) => {
+            setShowCreateRoom(false);
+            router.push(`/room/${roomId}`);
+          }}
+        />
+      )}
+
+      {showJoinRoom && (
+        <JoinRoomModal
+          isOpen={showJoinRoom}
+          onClose={() => setShowJoinRoom(false)}
+          onJoin={(roomId) => {
+            setShowJoinRoom(false);
+            router.push(`/room/${roomId}`);
+          }}
+        />
+      )}
+
+      {showFriends && (
+        <FriendsPanel
+          isOpen={showFriends}
+          onClose={() => setShowFriends(false)}
         />
       )}
     </div>
