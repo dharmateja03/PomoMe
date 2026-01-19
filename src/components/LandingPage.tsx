@@ -10,6 +10,11 @@ const features = [
     description: 'Set custom durations from 15 minutes to 3 hours. Work your way.',
   },
   {
+    icon: Users,
+    title: 'Study Together',
+    description: 'Create rooms and focus with friends. Synced timers, real-time presence.',
+  },
+  {
     icon: Target,
     title: 'Goal Tracking',
     description: 'Set weekly targets for each category and watch your progress grow.',
@@ -18,11 +23,6 @@ const features = [
     icon: BarChart3,
     title: 'Deep Analytics',
     description: 'Understand your patterns with detailed insights and streaks.',
-  },
-  {
-    icon: Zap,
-    title: 'Zero Distractions',
-    description: 'Clean interface designed to keep you in the zone.',
   },
 ];
 
@@ -92,7 +92,7 @@ export function LandingPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-800/50 rounded-full border border-zinc-700/50 mb-8">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-sm text-zinc-400">Now with custom durations & sounds</span>
+            <span className="text-sm text-zinc-400">New: Study Together - Focus with friends!</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6">

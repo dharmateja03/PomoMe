@@ -12,6 +12,273 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'study-together-collaborative-focus',
+    title: 'Study Together: The Power of Collaborative Focus Sessions',
+    excerpt: 'Discover how studying with friends can boost your productivity and accountability. Learn about our new Study Together feature.',
+    category: 'Features',
+    author: 'PomodoMe Team',
+    date: '2026-01-19',
+    readTime: '6 min read',
+    content: `
+# Study Together: The Power of Collaborative Focus Sessions
+
+Studying alone can be isolating and demotivating. That's why we built Study Together - a feature that lets you create virtual study rooms and focus alongside friends in real-time.
+
+## Why Study Together?
+
+Research shows that studying with others can significantly improve focus and motivation:
+
+1. **Accountability** - When others can see you're working, you're less likely to get distracted
+2. **Social motivation** - Knowing friends are working alongside you creates positive pressure
+3. **Shared experience** - Celebrating completed sessions together builds community
+4. **Reduced isolation** - Remote work and study can feel lonely
+
+## How Study Together Works
+
+### Creating a Room
+
+1. Click "Create Room" from the home page
+2. Name your study session (e.g., "Finals Prep" or "Deep Work")
+3. Set your timer duration (15 min to 90 min)
+4. Share the invite link with friends
+
+### Synced Timers
+
+When the host starts the timer, everyone in the room sees the same countdown. This creates a shared focus experience where everyone works together toward the same goal.
+
+### Real-Time Presence
+
+See who's online in your room. Watch as friends join and work alongside you, even if you're miles apart.
+
+## Best Practices for Study Rooms
+
+### 1. Set Clear Intentions
+Before starting, have everyone share what they plan to work on. This creates commitment.
+
+### 2. Use Consistent Session Lengths
+Stick to standard Pomodoro intervals (25-50 minutes) so everyone knows what to expect.
+
+### 3. Take Breaks Together
+Use break time to chat briefly, share progress, or just decompress before the next session.
+
+### 4. Celebrate Wins
+Completed a tough session? Celebrate together! Small acknowledgments build motivation.
+
+## Perfect For
+
+- **Study groups** preparing for exams
+- **Remote teams** doing deep work sprints
+- **Accountability partners** building habits
+- **Friends** who want to be productive together
+
+## Get Started
+
+Ready to try it? Create your first study room today and invite a friend. You might be surprised how much more you accomplish when you're not alone.
+
+The best focus is shared focus.
+    `,
+  },
+  {
+    slug: 'virtual-coworking-remote-productivity',
+    title: 'Virtual Coworking: How to Stay Productive While Working Remotely',
+    excerpt: 'Learn how virtual coworking sessions can combat isolation and boost productivity for remote workers and students.',
+    category: 'Remote Work',
+    author: 'PomodoMe Team',
+    date: '2026-01-18',
+    readTime: '7 min read',
+    content: `
+# Virtual Coworking: How to Stay Productive While Working Remotely
+
+The shift to remote work has given us flexibility, but it's also created new challenges. Isolation, lack of structure, and endless distractions at home can tank productivity. Virtual coworking is the solution.
+
+## What is Virtual Coworking?
+
+Virtual coworking is the practice of working alongside others via video call or shared online spaces, even when you're physically alone. It recreates the accountability and energy of a shared office or library.
+
+## The Science Behind It
+
+### Body Doubling
+
+Psychologists call this phenomenon "body doubling" - the presence of another person, even virtually, helps regulate attention and reduce procrastination. It's especially effective for people with ADHD.
+
+### Social Facilitation
+
+Studies show that people perform better on well-practiced tasks when others are present. Simply knowing someone else is working can boost your own performance.
+
+## How to Set Up Virtual Coworking
+
+### 1. Find Your People
+
+- Coworkers who also work remotely
+- Friends with similar schedules
+- Online communities (Discord servers, study groups)
+- Accountability partners
+
+### 2. Establish a Routine
+
+- Set regular coworking times (e.g., 9-11am daily)
+- Use a tool like PomodoMe's Study Together feature
+- Agree on session lengths and break times
+
+### 3. Create Ground Rules
+
+- Cameras on or off? (Both can work)
+- Chat during sessions or only during breaks?
+- How to signal you need help or want to chat?
+
+## Virtual Coworking Formats
+
+### Silent Working Sessions
+
+Everyone works quietly, cameras optionally on. The shared presence provides accountability without distraction.
+
+### Pomodoro Rooms
+
+Work in synced 25-minute blocks with 5-minute breaks. Chat during breaks, focus during sessions.
+
+### Focus Sprints
+
+Intense 90-minute sessions with a specific goal. Share intentions at the start, results at the end.
+
+## Tools for Virtual Coworking
+
+- **PomodoMe Study Together** - Synced timers with presence tracking
+- **Focusmate** - Matched coworking sessions
+- **Discord** - Community servers for ongoing connection
+- **Zoom/Meet** - Simple video calls
+
+## Making It Work Long-Term
+
+### Start Small
+
+Begin with one coworking session per week. Build consistency before increasing frequency.
+
+### Mix It Up
+
+Vary your coworking partners and formats to keep things fresh.
+
+### Communicate Needs
+
+If something isn't working, speak up. Good coworking relationships require honest communication.
+
+## Conclusion
+
+You don't have to work alone to work remotely. Virtual coworking combines the flexibility of remote work with the benefits of shared space. Try it this week - you might find it transforms your productivity.
+    `,
+  },
+  {
+    slug: 'accountability-partners-productivity',
+    title: 'The Ultimate Guide to Accountability Partners for Productivity',
+    excerpt: 'Learn how to find and work with accountability partners to achieve your goals faster and stay motivated.',
+    category: 'Productivity',
+    author: 'PomodoMe Team',
+    date: '2026-01-15',
+    readTime: '8 min read',
+    content: `
+# The Ultimate Guide to Accountability Partners for Productivity
+
+Want to 2x your chances of achieving a goal? Get an accountability partner. Research shows that having someone to answer to dramatically increases follow-through.
+
+## What is an Accountability Partner?
+
+An accountability partner is someone who helps you stay committed to your goals through regular check-ins, support, and honest feedback. They're not a coach or mentor - they're a peer walking alongside you.
+
+## Why Accountability Works
+
+### Public Commitment
+
+When you tell someone your goal, you create a social contract. Breaking it means admitting failure to another person, which we naturally avoid.
+
+### Regular Check-ins
+
+Knowing you'll report progress (or lack thereof) creates urgency. It's harder to skip a workout when someone will ask about it tomorrow.
+
+### External Perspective
+
+Partners can spot blind spots, offer encouragement during setbacks, and celebrate wins you might minimize.
+
+## Finding the Right Partner
+
+### Qualities to Look For
+
+- **Reliable** - They show up consistently
+- **Honest** - They'll call you out (kindly)
+- **Similar commitment level** - Mismatched dedication creates friction
+- **Complementary schedules** - You need to actually connect
+
+### Where to Find Partners
+
+- Friends with similar goals
+- Colleagues working on projects
+- Online communities (Reddit, Discord)
+- Dedicated platforms (Focusmate, PomodoMe)
+
+## How to Structure Partnership
+
+### 1. Set Clear Goals
+
+Both partners should have defined, measurable goals. Vague intentions don't create accountability.
+
+**Bad**: "I want to be more productive"
+**Good**: "I will complete 4 hours of deep work daily"
+
+### 2. Establish Check-in Rhythm
+
+- **Daily**: Quick text or message
+- **Weekly**: 15-30 minute call to review progress
+- **Monthly**: Deeper review of goals and adjustments
+
+### 3. Define Expectations
+
+- What happens if someone misses a check-in?
+- How honest should feedback be?
+- What kind of support do you each need?
+
+### 4. Use Shared Tools
+
+Track progress in a shared space:
+- Shared document or spreadsheet
+- Project management tool (Notion, Trello)
+- PomodoMe Study Rooms for real-time coworking
+
+## Accountability Partner Mistakes
+
+### Being Too Nice
+
+If your partner never challenges you, they're not helping. Kind honesty is essential.
+
+### Mismatched Investment
+
+If one person cares more than the other, resentment builds. Both must be equally committed.
+
+### No Structure
+
+"Let's keep each other accountable" without specific plans leads to nothing. Be specific.
+
+### Focusing Only on Failures
+
+Celebrate wins too! Positive reinforcement motivates continued effort.
+
+## Accountability in Action
+
+### Morning Intention Setting
+
+Text your partner what you plan to accomplish today. Be specific.
+
+### End-of-Day Report
+
+Share what you actually did. No judgment, just facts.
+
+### Weekly Review
+
+What worked? What didn't? What will you do differently?
+
+## Conclusion
+
+An accountability partner isn't a magic solution - you still have to do the work. But they make the work easier, more consistent, and more enjoyable. Find a partner this week and start holding each other accountable.
+    `,
+  },
+  {
     slug: 'pomodoro-technique-guide',
     title: 'The Complete Guide to the Pomodoro Technique in 2025',
     excerpt: 'Master the art of focused work with this comprehensive guide to the Pomodoro Technique. Learn how to boost productivity and beat procrastination.',

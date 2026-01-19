@@ -159,7 +159,7 @@ export default function Home() {
         </header>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-center gap-3 mb-10 flex-wrap">
+        <div className="flex justify-center gap-3 mb-6">
           <button
             onClick={() => setShowHistory(true)}
             className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800/40 hover:bg-zinc-700/40 text-zinc-300 hover:text-white rounded-xl transition-all duration-200 border border-zinc-700/50"
@@ -174,20 +174,34 @@ export default function Home() {
             <BarChart3 size={18} />
             <span className="text-sm font-medium">Analytics</span>
           </button>
-          <div className="flex flex-col items-center">
-            <button
-              onClick={() => setShowCreateRoom(true)}
-              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-500/20 to-blue-500/20 hover:from-violet-500/30 hover:to-blue-500/30 text-violet-300 hover:text-white rounded-xl transition-all duration-200 border border-violet-500/30"
-            >
-              <Users size={18} />
-              <span className="text-sm font-medium">Study Together</span>
-            </button>
-            <button
-              onClick={() => setShowJoinRoom(true)}
-              className="text-xs text-zinc-500 hover:text-violet-400 mt-1 transition-colors"
-            >
-              Have an invite code?
-            </button>
+        </div>
+
+        {/* Study Together Card */}
+        <div className="mb-10 p-4 bg-gradient-to-r from-violet-500/10 to-blue-500/10 rounded-2xl border border-violet-500/20">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-blue-500 rounded-xl flex items-center justify-center">
+                <Users size={20} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-white font-medium">Study Together</h3>
+                <p className="text-xs text-zinc-400">Create or join a study room with friends</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowJoinRoom(true)}
+                className="px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-500/20 rounded-lg transition-colors"
+              >
+                Join Room
+              </button>
+              <button
+                onClick={() => setShowCreateRoom(true)}
+                className="px-4 py-2 text-sm bg-gradient-to-r from-violet-500 to-blue-500 text-white rounded-lg hover:from-violet-400 hover:to-blue-400 transition-colors"
+              >
+                Create Room
+              </button>
+            </div>
           </div>
         </div>
 
