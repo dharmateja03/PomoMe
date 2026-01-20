@@ -1,21 +1,46 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "PomodoMe - Focus Timer",
-  description: "Beautiful pomodoro timer to track your focus sessions",
+  title: "PomodoMe | Focus Timer & Productivity Tracker",
+  description: "Boost your productivity with PomodoMe - the modern pomodoro timer with collaborative study rooms, goal tracking, and detailed analytics. Study together with friends in real-time.",
+  keywords: ["pomodoro timer", "focus timer", "productivity app", "study together", "collaborative studying", "time tracking", "goal tracking", "focus sessions"],
+  authors: [{ name: "PomodoMe" }],
+  creator: "PomodoMe",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://pomodome.app",
+    siteName: "PomodoMe",
+    title: "PomodoMe | Focus Timer & Productivity Tracker",
+    description: "Boost your productivity with PomodoMe - the modern pomodoro timer with collaborative study rooms, goal tracking, and detailed analytics.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "PomodoMe - Focus Timer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PomodoMe | Focus Timer & Productivity Tracker",
+    description: "Boost your productivity with PomodoMe - the modern pomodoro timer with collaborative study rooms and analytics.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -26,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} font-sans antialiased`}
       >
         <Providers>{children}</Providers>
       </body>

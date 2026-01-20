@@ -4,60 +4,50 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Hls from 'hls.js';
 import { ArrowRight, Zap, Users, Clock, Target, BarChart3, Star, Check } from 'lucide-react';
-import { InfiniteSlider } from './ui/infinite-slider';
-import { cn } from '@/lib/cn';
-
-const logos = [
-  { name: 'OpenAI', url: 'https://html.tailus.io/blocks/customers/openai.svg' },
-  { name: 'Nvidia', url: 'https://html.tailus.io/blocks/customers/nvidia.svg' },
-  { name: 'GitHub', url: 'https://html.tailus.io/blocks/customers/github.svg' },
-  { name: 'Google', url: 'https://html.tailus.io/blocks/customers/google.svg' },
-  { name: 'Stripe', url: 'https://html.tailus.io/blocks/customers/stripe.svg' },
-];
 
 const features = [
   {
     icon: Clock,
-    title: 'Flexible Timer',
-    description: 'Set custom durations from 15 minutes to 3 hours. Work your way.',
+    title: 'Customizable Sessions',
+    description: 'Tailor your focus blocks from 15 to 180 minutes. Your rhythm, your rules.',
   },
   {
     icon: Users,
-    title: 'Study Together',
-    description: 'Create rooms and focus with friends. Synced timers, real-time presence.',
+    title: 'Virtual Co-Working',
+    description: 'Invite friends to study rooms with synced timers and live presence.',
   },
   {
     icon: Target,
-    title: 'Goal Tracking',
-    description: 'Set weekly targets for each category and watch your progress grow.',
+    title: 'Smart Goal Setting',
+    description: 'Define weekly hour targets by category and crush them consistently.',
   },
   {
     icon: BarChart3,
-    title: 'Deep Analytics',
-    description: 'Understand your patterns with detailed insights and streaks.',
+    title: 'Insightful Analytics',
+    description: 'Visualize your focus habits with charts, streaks, and progress reports.',
   },
 ];
 
 const testimonials = [
   {
-    name: 'Sarah Chen',
-    role: 'Software Engineer',
-    image: 'SC',
-    content: 'Finally, a focus timer that actually understands how I work. The category system is genius.',
+    name: 'Alex Rivera',
+    role: 'Product Designer',
+    image: 'AR',
+    content: 'The best focus tool I have used. Categories let me see exactly where my time goes each week.',
     rating: 5,
   },
   {
-    name: 'Marcus Johnson',
-    role: 'Graduate Student',
-    image: 'MJ',
-    content: 'Helped me track 200+ hours of thesis work. The analytics kept me accountable.',
+    name: 'Jordan Lee',
+    role: 'CS Student',
+    image: 'JL',
+    content: 'Study Together changed my remote learning. My friends and I stay accountable every session.',
     rating: 5,
   },
   {
-    name: 'Elena Rodriguez',
-    role: 'Freelance Designer',
-    image: 'ER',
-    content: 'Simple, beautiful, effective. I recommend it to all my creative friends.',
+    name: 'Sam Patel',
+    role: 'Startup Founder',
+    image: 'SP',
+    content: 'Clean design, zero distractions. Exactly what I needed to get deep work done.',
     rating: 5,
   },
 ];
@@ -116,7 +106,7 @@ function AnnouncementPill() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-[#FA93FA] via-[#C967E8] to-[#983AD6] rounded-lg blur-lg opacity-50" />
       </div>
-      <span className="text-sm text-white/70">Study Together - Focus with friends in real-time!</span>
+      <span className="text-sm text-white/70">New: Virtual co-working rooms are live</span>
     </div>
   );
 }
@@ -126,7 +116,7 @@ function CTAButton() {
     <Link href="/signup" className="group relative inline-flex">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#FA93FA] via-[#C967E8] to-[#983AD6] rounded-full blur opacity-30 group-hover:opacity-50 transition" />
       <div className="relative flex items-center gap-3 px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-white/90 transition-all">
-        <span>Start Focusing Free</span>
+        <span>Get Started Free</span>
         <div className="w-8 h-8 bg-gradient-to-br from-[#FA93FA] via-[#C967E8] to-[#983AD6] rounded-full flex items-center justify-center">
           <ArrowRight size={16} className="text-white group-hover:translate-x-0.5 transition-transform" />
         </div>
@@ -135,30 +125,6 @@ function CTAButton() {
   );
 }
 
-function LogoCloud() {
-  return (
-    <section className="relative z-20 bg-black/20 backdrop-blur-sm border-t border-white/5">
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="flex flex-col md:flex-row items-center gap-8">
-          <div className="flex items-center gap-4 shrink-0">
-            <span className="text-sm text-white/50 whitespace-nowrap">Powering the best teams</span>
-            <div className="hidden md:block w-px h-8 bg-white/10" />
-          </div>
-          <InfiniteSlider speed={40} className="flex-1">
-            {logos.map((logo) => (
-              <img
-                key={logo.name}
-                src={logo.url}
-                alt={logo.name}
-                className="h-6 w-auto brightness-0 invert opacity-50 hover:opacity-80 transition-opacity"
-              />
-            ))}
-          </InfiniteSlider>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export function LandingPage() {
   return (
@@ -198,19 +164,19 @@ export function LandingPage() {
         <div className="relative z-20 max-w-4xl mx-auto text-center">
           <AnnouncementPill />
 
-          <h1 className="text-5xl md:text-7xl lg:text-[80px] font-bold leading-tight mb-6">
+          <h1 className="text-5xl md:text-7xl lg:text-[80px] font-bold leading-tight mb-6 tracking-tight">
             <span className="bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent">
-              Your Focus
+              Deep Work,
             </span>
             <br />
             <span className="bg-gradient-to-r from-white via-[#FA93FA] to-[#983AD6] bg-clip-text text-transparent">
-              Our Digital Reality.
+              Made Simple.
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
-            The pomodoro timer that adapts to your workflow. Track focus sessions by category,
-            study with friends, and watch your productivity transform.
+          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+            A pomodoro timer built for how you actually work. Organize focus sessions by project,
+            co-work with friends, and see real progress every week.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -219,7 +185,7 @@ export function LandingPage() {
               href="/blog/study-together-collaborative-focus"
               className="flex items-center gap-2 px-8 py-4 text-white/60 hover:text-white font-medium transition-colors"
             >
-              Learn about Study Together
+              See how co-working works
               <ArrowRight size={18} />
             </Link>
           </div>
@@ -229,20 +195,17 @@ export function LandingPage() {
         <HeroVideo />
       </section>
 
-      {/* Logo Cloud */}
-      <LogoCloud />
-
       {/* Features */}
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
               <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                Everything you need to stay focused
+                Built for Focused Minds
               </span>
             </h2>
             <p className="text-white/50 max-w-xl mx-auto">
-              Built for people who take their time seriously. No fluff, just results.
+              No clutter. No distractions. Just the tools you need to do your best work.
             </p>
           </div>
 
@@ -270,18 +233,18 @@ export function LandingPage() {
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
               <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                Simple as 1, 2, 3
+                Start in Seconds
               </span>
             </h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { step: '01', title: 'Pick a category', desc: 'Create categories for different types of work' },
-              { step: '02', title: 'Start the timer', desc: 'Choose your duration and begin focusing' },
-              { step: '03', title: 'Track progress', desc: 'Watch your hours add up toward your goals' },
+              { step: '01', title: 'Create a Category', desc: 'Label your projects—code, study, design, whatever you do' },
+              { step: '02', title: 'Set Your Timer', desc: 'Pick a focus block that fits your flow and hit start' },
+              { step: '03', title: 'See Your Growth', desc: 'Track hours logged and hit your weekly targets' },
             ].map((item) => (
               <div key={item.step} className="text-center">
                 <div className="text-6xl font-bold bg-gradient-to-b from-[#983AD6]/30 to-transparent bg-clip-text text-transparent mb-4">
@@ -307,15 +270,15 @@ export function LandingPage() {
                   <Users size={14} className="text-[#C967E8]" />
                   <span className="text-sm text-[#FA93FA]">New Feature</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  Study Together
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+                  Co-Work Anywhere
                 </h2>
                 <p className="text-white/70 mb-6 leading-relaxed">
-                  Create virtual study rooms and focus alongside friends in real-time.
-                  Synced timers keep everyone on track while presence tracking shows who&apos;s online.
+                  Create a room, share the link, and focus alongside your crew.
+                  Synced timers and live presence keep everyone locked in together.
                 </p>
                 <ul className="space-y-3 mb-8">
-                  {['Synced timers for the whole room', 'Real-time presence tracking', 'Invite friends with a link', 'Host controls the session'].map((item) => (
+                  {['One timer synced for everyone', 'See who is actively focusing', 'Share a link to invite others', 'Host manages the session'].map((item) => (
                     <li key={item} className="flex items-center gap-3 text-white/60">
                       <Check size={16} className="text-[#C967E8]" />
                       {item}
@@ -326,7 +289,7 @@ export function LandingPage() {
                   href="/signup"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FA93FA] via-[#C967E8] to-[#983AD6] text-white font-semibold rounded-full hover:opacity-90 transition-opacity"
                 >
-                  Try Study Together
+                  Create a Room
                   <ArrowRight size={18} />
                 </Link>
               </div>
@@ -363,9 +326,9 @@ export function LandingPage() {
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
               <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                Loved by focused people
+                What People Are Saying
               </span>
             </h2>
           </div>
@@ -403,13 +366,13 @@ export function LandingPage() {
           <div className="relative p-12 rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent backdrop-blur-sm overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-[#FA93FA]/10 via-transparent to-[#983AD6]/10" />
             <div className="relative">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
                 <span className="bg-gradient-to-r from-white via-[#FA93FA] to-[#983AD6] bg-clip-text text-transparent">
-                  Ready to transform your focus?
+                  Ready to Do Your Best Work?
                 </span>
               </h2>
               <p className="text-white/50 mb-8 max-w-lg mx-auto">
-                Join thousands who&apos;ve already improved their productivity. Free forever for personal use.
+                Join focused people everywhere. Free to use, no credit card required.
               </p>
               <CTAButton />
               <div className="flex items-center justify-center gap-6 mt-8 text-sm text-white/40">
