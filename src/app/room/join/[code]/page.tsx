@@ -96,9 +96,9 @@ export default function JoinRoomPage() {
 
   if (status === 'loading' || (loading && status === 'authenticated')) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[#010101] flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-12 h-12 border-4 border-[#C967E8] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-zinc-400 mt-4">Finding room...</p>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function JoinRoomPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#010101] flex items-center justify-center p-4">
         <div className="text-center max-w-md">
           <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
             <Users size={32} className="text-red-400" />
@@ -116,7 +116,7 @@ export default function JoinRoomPage() {
           <p className="text-zinc-400 mb-6">{error}</p>
           <button
             onClick={() => router.push('/')}
-            className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg transition-colors"
+            className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
           >
             Go Home
           </button>
@@ -130,8 +130,14 @@ export default function JoinRoomPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-[#010101] flex items-center justify-center p-4">
+      {/* Background effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#983AD6]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FA93FA]/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative z-10 w-full max-w-md">
         <button
           onClick={() => router.push('/')}
           className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-8"
@@ -140,16 +146,16 @@ export default function JoinRoomPage() {
           <span>Back to Home</span>
         </button>
 
-        <div className="bg-zinc-900 rounded-2xl p-6 shadow-xl">
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-br from-[#FA93FA] to-[#983AD6] rounded-full flex items-center justify-center mx-auto mb-4">
               <Users size={32} className="text-white" />
             </div>
             <h1 className="text-2xl font-bold text-white">Join Study Room</h1>
             <p className="text-zinc-400 mt-1">You've been invited to join a study session</p>
           </div>
 
-          <div className="bg-zinc-800/50 rounded-xl p-4 space-y-3 mb-6">
+          <div className="bg-white/5 rounded-xl p-4 space-y-3 mb-6 border border-white/10">
             <h2 className="text-lg font-semibold text-white">{room.name}</h2>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between text-zinc-400">
@@ -177,7 +183,7 @@ export default function JoinRoomPage() {
           <button
             onClick={handleJoin}
             disabled={joining}
-            className="w-full py-3 bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-400 hover:to-blue-400 text-white font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 bg-gradient-to-r from-[#FA93FA] via-[#C967E8] to-[#983AD6] hover:opacity-90 text-white font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {joining ? 'Joining...' : 'Join Room'}
           </button>

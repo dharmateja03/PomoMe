@@ -98,9 +98,9 @@ export default function Home() {
   // Loading state
   if (status === 'loading' || categoriesLoading || sessionsLoading || !settingsLoaded) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[#010101] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 size={40} className="text-orange-400 animate-spin" />
+          <Loader2 size={40} className="text-[#C967E8] animate-spin" />
           <p className="text-zinc-500">Loading...</p>
         </div>
       </div>
@@ -108,11 +108,11 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+    <div className="min-h-screen bg-[#010101]">
       {/* Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#983AD6]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FA93FA]/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto px-4 py-8 md:py-12">
@@ -122,26 +122,26 @@ export default function Home() {
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setShowSettings(true)}
-                className="p-2 text-zinc-500 hover:text-white hover:bg-zinc-800/50 rounded-lg transition-all"
+                className="p-2 text-zinc-500 hover:text-white hover:bg-white/5 rounded-lg transition-all"
                 title="Settings"
               >
                 <SettingsIcon size={18} />
               </button>
               <button
                 onClick={() => setShowFriends(true)}
-                className="p-2 text-zinc-500 hover:text-violet-400 hover:bg-zinc-800/50 rounded-lg transition-all"
+                className="p-2 text-zinc-500 hover:text-[#C967E8] hover:bg-white/5 rounded-lg transition-all"
                 title="Friends"
               >
                 <UserPlus size={18} />
               </button>
             </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800/30 rounded-full border border-zinc-700/50">
-              <Sparkles size={14} className="text-orange-400" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10">
+              <Sparkles size={14} className="text-[#C967E8]" />
               <span className="text-sm text-zinc-400">Focus Timer</span>
             </div>
             <button
               onClick={handleSignOut}
-              className="p-2 text-zinc-500 hover:text-white hover:bg-zinc-800/50 rounded-lg transition-all"
+              className="p-2 text-zinc-500 hover:text-white hover:bg-white/5 rounded-lg transition-all"
               title="Sign out"
             >
               <LogOut size={18} />
@@ -149,7 +149,7 @@ export default function Home() {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-2">
             Pomodo
-            <span className="bg-gradient-to-r from-orange-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FA93FA] to-[#983AD6] bg-clip-text text-transparent">
               Me
             </span>
           </h1>
@@ -162,14 +162,14 @@ export default function Home() {
         <div className="flex justify-center gap-3 mb-6">
           <button
             onClick={() => setShowHistory(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800/40 hover:bg-zinc-700/40 text-zinc-300 hover:text-white rounded-xl transition-all duration-200 border border-zinc-700/50"
+            className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white rounded-xl transition-all duration-200 border border-white/10"
           >
             <Clock size={18} />
             <span className="text-sm font-medium">History</span>
           </button>
           <button
             onClick={() => setShowAnalytics(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800/40 hover:bg-zinc-700/40 text-zinc-300 hover:text-white rounded-xl transition-all duration-200 border border-zinc-700/50"
+            className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white rounded-xl transition-all duration-200 border border-white/10"
           >
             <BarChart3 size={18} />
             <span className="text-sm font-medium">Analytics</span>
@@ -177,10 +177,10 @@ export default function Home() {
         </div>
 
         {/* Study Together Card */}
-        <div className="mb-10 p-4 bg-gradient-to-r from-violet-500/10 to-blue-500/10 rounded-2xl border border-violet-500/20">
+        <div className="mb-10 p-4 bg-gradient-to-r from-[#FA93FA]/10 via-[#C967E8]/5 to-[#983AD6]/10 rounded-2xl border border-[#983AD6]/20">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-blue-500 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-[#FA93FA] to-[#983AD6] rounded-xl flex items-center justify-center">
                 <Users size={20} className="text-white" />
               </div>
               <div>
@@ -191,13 +191,13 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowJoinRoom(true)}
-                className="px-4 py-2 text-sm text-violet-300 hover:text-white hover:bg-violet-500/20 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm text-[#FA93FA] hover:text-white hover:bg-[#983AD6]/20 rounded-lg transition-colors"
               >
                 Join Room
               </button>
               <button
                 onClick={() => setShowCreateRoom(true)}
-                className="px-4 py-2 text-sm bg-gradient-to-r from-violet-500 to-blue-500 text-white rounded-lg hover:from-violet-400 hover:to-blue-400 transition-colors"
+                className="px-4 py-2 text-sm bg-gradient-to-r from-[#FA93FA] via-[#C967E8] to-[#983AD6] text-white rounded-lg hover:opacity-90 transition-colors"
               >
                 Create Room
               </button>
@@ -241,8 +241,8 @@ export default function Home() {
         {/* Empty State */}
         {categories.length === 0 && (
           <div className="text-center py-8">
-            <div className="w-16 h-16 mx-auto mb-4 bg-zinc-800/50 rounded-full flex items-center justify-center">
-              <Sparkles size={28} className="text-zinc-600" />
+            <div className="w-16 h-16 mx-auto mb-4 bg-white/5 rounded-full flex items-center justify-center">
+              <Sparkles size={28} className="text-[#C967E8]" />
             </div>
             <p className="text-zinc-400 mb-2">No categories yet</p>
             <p className="text-zinc-600 text-sm">

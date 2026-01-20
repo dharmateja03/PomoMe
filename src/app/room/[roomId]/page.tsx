@@ -43,8 +43,8 @@ export default function RoomPage() {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#010101] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#C967E8] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }

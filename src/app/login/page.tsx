@@ -39,18 +39,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#010101] flex items-center justify-center p-4">
       {/* Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#983AD6]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FA93FA]/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800/30 rounded-full border border-zinc-700/50 mb-6">
-            <Sparkles size={14} className="text-orange-400" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 mb-6">
+            <Sparkles size={14} className="text-[#C967E8]" />
             <span className="text-sm text-zinc-400">Focus Timer</span>
           </div>
           <h1 className="text-3xl font-bold text-white tracking-tight">
@@ -70,7 +70,7 @@ export default function LoginPage() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#983AD6]/50 focus:border-transparent transition-all"
               required
             />
           </div>
@@ -84,7 +84,7 @@ export default function LoginPage() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#983AD6]/50 focus:border-transparent transition-all"
               required
             />
           </div>
@@ -98,7 +98,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl font-medium transition-all duration-200 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-400 hover:to-pink-400 text-white shadow-lg shadow-orange-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-xl font-medium transition-all duration-200 bg-gradient-to-r from-[#FA93FA] via-[#C967E8] to-[#983AD6] hover:opacity-90 text-white shadow-lg shadow-[#983AD6]/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
@@ -113,7 +113,7 @@ export default function LoginPage() {
 
         <p className="text-center text-zinc-500 mt-6">
           Don&apos;t have an account?{' '}
-          <Link href="/signup" className="text-orange-400 hover:text-orange-300 transition-colors">
+          <Link href="/signup" className="text-[#FA93FA] hover:text-[#C967E8] transition-colors">
             Sign up
           </Link>
         </p>

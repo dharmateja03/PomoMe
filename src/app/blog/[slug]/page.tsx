@@ -47,12 +47,12 @@ export default async function BlogPostPage({ params }: PageProps) {
   const prevPost = allPosts[currentIndex - 1];
 
   return (
-    <div className="min-h-screen bg-[#09090b]">
+    <div className="min-h-screen bg-[#010101]">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#09090b]/80 backdrop-blur-xl border-b border-zinc-800/50">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#010101]/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold text-white">
-            Pomodo<span className="text-orange-400">Me</span>
+            Pomodo<span className="bg-gradient-to-r from-[#FA93FA] to-[#983AD6] bg-clip-text text-transparent">Me</span>
           </Link>
           <div className="flex items-center gap-6">
             <Link href="/blog" className="text-sm text-zinc-400 hover:text-white transition-colors">
@@ -85,7 +85,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
           {/* Header */}
           <header className="mb-12">
-            <span className="inline-block px-3 py-1 bg-orange-500/10 text-orange-400 text-sm rounded-full mb-6">
+            <span className="inline-block px-3 py-1 bg-[#983AD6]/20 text-[#FA93FA] text-sm rounded-full mb-6">
               {post.category}
             </span>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
@@ -118,9 +118,9 @@ export default async function BlogPostPage({ params }: PageProps) {
             prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:mb-4
             prose-li:text-zinc-300
             prose-strong:text-white
-            prose-a:text-orange-400 prose-a:no-underline hover:prose-a:underline
-            prose-code:text-orange-400 prose-code:bg-zinc-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-            prose-blockquote:border-orange-500 prose-blockquote:text-zinc-400
+            prose-a:text-[#FA93FA] prose-a:no-underline hover:prose-a:underline
+            prose-code:text-[#C967E8] prose-code:bg-white/10 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+            prose-blockquote:border-[#983AD6] prose-blockquote:text-zinc-400
           ">
             {post.content.split('\n').map((paragraph, index) => {
               const trimmed = paragraph.trim();
@@ -152,7 +152,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
 
           {/* CTA */}
-          <div className="mt-16 p-8 bg-gradient-to-r from-orange-500/10 to-pink-500/10 rounded-2xl border border-zinc-800/50">
+          <div className="mt-16 p-8 bg-gradient-to-r from-[#FA93FA]/10 via-[#C967E8]/5 to-[#983AD6]/10 rounded-2xl border border-white/10">
             <h3 className="text-xl font-bold text-white mb-3">
               Ready to put this into practice?
             </h3>
@@ -161,18 +161,18 @@ export default async function BlogPostPage({ params }: PageProps) {
             </p>
             <Link
               href="/signup"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-zinc-200 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FA93FA] via-[#C967E8] to-[#983AD6] text-white font-semibold rounded-lg hover:opacity-90 transition-all"
             >
               Start Free <ArrowRight size={18} />
             </Link>
           </div>
 
           {/* Navigation */}
-          <div className="mt-12 pt-12 border-t border-zinc-800/50 grid md:grid-cols-2 gap-6">
+          <div className="mt-12 pt-12 border-t border-white/10 grid md:grid-cols-2 gap-6">
             {prevPost && (
               <Link href={`/blog/${prevPost.slug}`} className="group">
                 <span className="text-sm text-zinc-500 mb-2 block">← Previous</span>
-                <span className="text-white group-hover:text-orange-400 transition-colors">
+                <span className="text-white group-hover:text-[#C967E8] transition-colors">
                   {prevPost.title}
                 </span>
               </Link>
@@ -180,7 +180,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             {nextPost && (
               <Link href={`/blog/${nextPost.slug}`} className="group text-right md:col-start-2">
                 <span className="text-sm text-zinc-500 mb-2 block">Next →</span>
-                <span className="text-white group-hover:text-orange-400 transition-colors">
+                <span className="text-white group-hover:text-[#C967E8] transition-colors">
                   {nextPost.title}
                 </span>
               </Link>
@@ -190,10 +190,10 @@ export default async function BlogPostPage({ params }: PageProps) {
       </article>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-zinc-800/50">
+      <footer className="py-12 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-xl font-bold text-white">
-            Pomodo<span className="text-orange-400">Me</span>
+            Pomodo<span className="bg-gradient-to-r from-[#FA93FA] to-[#983AD6] bg-clip-text text-transparent">Me</span>
           </div>
           <div className="flex items-center gap-8 text-sm text-zinc-500">
             <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
@@ -201,7 +201,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             <Link href="/signup" className="hover:text-white transition-colors">Get Started</Link>
           </div>
           <div className="text-sm text-zinc-600">
-            © 2025 PomodoMe
+            © 2026 PomodoMe
           </div>
         </div>
       </footer>
