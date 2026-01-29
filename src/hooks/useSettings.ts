@@ -3,11 +3,18 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export interface Settings {
-  timerDuration: number; // in minutes
+  timerDuration: number; // in minutes (legacy, used for simple timer)
   soundEnabled: boolean;
   soundVolume: number; // 0-100
   selectedSound: string;
   timezone: string; // IANA timezone identifier
+  // Pomodoro session settings
+  totalSessions: number; // number of work sessions
+  workDuration: number; // work time in minutes
+  breakDuration: number; // short break in minutes
+  longBreakDuration: number; // long break in minutes
+  sessionsBeforeLongBreak: number; // sessions before long break
+  voiceEnabled: boolean; // voice announcements
 }
 
 const DEFAULT_SETTINGS: Settings = {
@@ -16,6 +23,13 @@ const DEFAULT_SETTINGS: Settings = {
   soundVolume: 80,
   selectedSound: 'bell',
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  // Pomodoro defaults
+  totalSessions: 4,
+  workDuration: 25,
+  breakDuration: 5,
+  longBreakDuration: 15,
+  sessionsBeforeLongBreak: 4,
+  voiceEnabled: true,
 };
 
 export const TIMEZONE_OPTIONS = [

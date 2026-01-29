@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Settings as SettingsIcon, Volume2, VolumeX, Clock, RotateCcw, Play, Globe } from 'lucide-react';
+import { X, Settings as SettingsIcon, Volume2, VolumeX, Clock, RotateCcw, Play, Globe, Target, Coffee, Mic, MicOff } from 'lucide-react';
 import { type Settings as SettingsType, DURATION_PRESETS, TIMEZONE_OPTIONS } from '@/hooks/useSettings';
 import { playSound, type SoundType } from '@/lib/sounds';
 
@@ -42,7 +42,7 @@ export function Settings({ settings, onUpdate, onReset, onClose }: SettingsProps
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-zinc-900 rounded-2xl w-full max-w-md border border-zinc-800 shadow-2xl">
+      <div className="bg-zinc-900 rounded-2xl w-full max-w-md border border-zinc-800 shadow-2xl max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-zinc-800">
           <div className="flex items-center gap-3">
@@ -60,7 +60,7 @@ export function Settings({ settings, onUpdate, onReset, onClose }: SettingsProps
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6 overflow-y-auto flex-1">
           {/* Timer Duration */}
           <div>
             <label className="flex items-center gap-2 text-sm font-medium text-zinc-400 mb-3">
@@ -172,6 +172,149 @@ export function Settings({ settings, onUpdate, onReset, onClose }: SettingsProps
                 </button>
               </>
             )}
+          </div>
+
+          {/* Pomodoro Session Settings */}
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-zinc-400 mb-3">
+              <Target size={16} />
+              Pomodoro Sessions
+            </label>
+
+            <div className="space-y-4">
+              {/* Number of sessions */}
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-zinc-300">Total Sessions</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onUpdate({ totalSessions: Math.max(1, settings.totalSessions - 1) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="w-8 text-center text-white font-medium">{settings.totalSessions}</span>
+                  <button
+                    onClick={() => onUpdate({ totalSessions: Math.min(10, settings.totalSessions + 1) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Work duration */}
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-zinc-300">Work Duration</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onUpdate({ workDuration: Math.max(5, settings.workDuration - 5) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="w-12 text-center text-white font-medium">{settings.workDuration}m</span>
+                  <button
+                    onClick={() => onUpdate({ workDuration: Math.min(120, settings.workDuration + 5) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Break duration */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Coffee size={14} className="text-zinc-500" />
+                  <span className="text-sm text-zinc-300">Break Duration</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onUpdate({ breakDuration: Math.max(1, settings.breakDuration - 1) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="w-12 text-center text-white font-medium">{settings.breakDuration}m</span>
+                  <button
+                    onClick={() => onUpdate({ breakDuration: Math.min(30, settings.breakDuration + 1) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Long break duration */}
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-zinc-300">Long Break Duration</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onUpdate({ longBreakDuration: Math.max(5, settings.longBreakDuration - 5) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="w-12 text-center text-white font-medium">{settings.longBreakDuration}m</span>
+                  <button
+                    onClick={() => onUpdate({ longBreakDuration: Math.min(60, settings.longBreakDuration + 5) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Sessions before long break */}
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-zinc-300">Sessions Before Long Break</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onUpdate({ sessionsBeforeLongBreak: Math.max(2, settings.sessionsBeforeLongBreak - 1) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="w-8 text-center text-white font-medium">{settings.sessionsBeforeLongBreak}</span>
+                  <button
+                    onClick={() => onUpdate({ sessionsBeforeLongBreak: Math.min(settings.totalSessions, settings.sessionsBeforeLongBreak + 1) })}
+                    className="w-8 h-8 rounded-lg bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xs text-zinc-500 mt-3">
+              Work {settings.workDuration}m → Break {settings.breakDuration}m → Repeat {settings.totalSessions}x
+            </p>
+          </div>
+
+          {/* Voice Announcements */}
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-zinc-400 mb-3">
+              {settings.voiceEnabled ? <Mic size={16} /> : <MicOff size={16} />}
+              Voice Announcements
+            </label>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-zinc-300">Announce session/break changes</span>
+              <button
+                onClick={() => onUpdate({ voiceEnabled: !settings.voiceEnabled })}
+                className={`relative w-12 h-6 rounded-full transition-colors ${
+                  settings.voiceEnabled ? 'bg-orange-500' : 'bg-zinc-700'
+                }`}
+              >
+                <span
+                  className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                    settings.voiceEnabled ? 'left-7' : 'left-1'
+                  }`}
+                />
+              </button>
+            </div>
+            <p className="text-xs text-zinc-500 mt-2">
+              Uses text-to-speech to announce when work/break starts
+            </p>
           </div>
 
           {/* Timezone Settings */}

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import { Clock, BarChart3, Sparkles, LogOut, Loader2, Settings as SettingsIcon, Users, UserPlus, Timer as TimerIcon, Hourglass, Play } from 'lucide-react';
 import { Timer } from '@/components/Timer';
+import { PomodoroTimer } from '@/components/PomodoroTimer';
 import { Stopwatch } from '@/components/Stopwatch';
 import { CountdownTimer } from '@/components/CountdownTimer';
 import { CurrentTime } from '@/components/CurrentTime';
@@ -261,13 +262,18 @@ export default function Home() {
         {/* Timer Components */}
         <div className="mb-10">
           {timerMode === 'pomodoro' && (
-            <Timer
+            <PomodoroTimer
               onComplete={handleSessionComplete}
               isDisabled={!selectedCategory}
-              durationMinutes={settings.timerDuration}
+              totalSessions={settings.totalSessions}
+              workDuration={settings.workDuration}
+              breakDuration={settings.breakDuration}
+              longBreakDuration={settings.longBreakDuration}
+              sessionsBeforeLongBreak={settings.sessionsBeforeLongBreak}
               soundEnabled={settings.soundEnabled}
               soundVolume={settings.soundVolume}
               selectedSound={settings.selectedSound}
+              voiceEnabled={settings.voiceEnabled}
             />
           )}
           {timerMode === 'stopwatch' && <Stopwatch />}
