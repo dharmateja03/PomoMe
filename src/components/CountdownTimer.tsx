@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Play, Pause, RotateCcw, Plus, Minus } from 'lucide-react';
+import { Play, Pause, RotateCcw, Plus, Minus, Maximize, Minimize, Keyboard } from 'lucide-react';
 import { playSound, type SoundType } from '@/lib/sounds';
 
 interface CountdownTimerProps {
@@ -21,7 +21,10 @@ export function CountdownTimer({
   const [timeLeft, setTimeLeft] = useState(0); // in seconds
   const [isRunning, setIsRunning] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const totalSetTime = hours * 3600 + minutes * 60 + seconds;
 
@@ -76,6 +79,14 @@ export function CountdownTimer({
     setIsRunning(false);
   }, []);
 
+  const toggleTimer = useCallback(() => {
+    if (isRunning) {
+      pauseTimer();
+    } else {
+      startTimer();
+    }
+  }, [isRunning, pauseTimer, startTimer]);
+
   const resetTimer = useCallback(() => {
     setIsRunning(false);
     setTimeLeft(0);
@@ -94,6 +105,68 @@ export function CountdownTimer({
     }
   };
 
+  const toggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      containerRef.current?.requestFullscreen?.();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen?.();
+      setIsFullscreen(false);
+    }
+  }, []);
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      switch (e.code) {
+        case 'Space':
+          e.preventDefault();
+          toggleTimer();
+          break;
+        case 'KeyR':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            resetTimer();
+          }
+          break;
+        case 'KeyF':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            toggleFullscreen();
+          }
+          break;
+        case 'Escape':
+          if (isFullscreen) {
+            setIsFullscreen(false);
+          }
+          setShowShortcuts(false);
+          break;
+        case 'Slash':
+          if (e.shiftKey) {
+            e.preventDefault();
+            setShowShortcuts(prev => !prev);
+          }
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggleTimer, resetTimer, toggleFullscreen, isFullscreen]);
+
   const formatDisplay = (value: number) => value.toString().padStart(2, '0');
 
   const displayHours = Math.floor(timeLeft / 3600);
@@ -107,9 +180,29 @@ export function CountdownTimer({
   const showTimeInput = !isRunning && timeLeft === 0;
 
   return (
-    <div className="flex flex-col items-center">
+    <div
+      ref={containerRef}
+      className={`flex flex-col items-center ${
+        isFullscreen ? 'fixed inset-0 z-50 bg-[#010101] justify-center' : ''
+      }`}
+    >
+      {/* Fullscreen header */}
+      {isFullscreen && (
+        <div className="absolute top-6 left-6 right-6 flex items-center justify-between">
+          <div className="text-2xl font-bold text-white">
+            Pomodo<span className="bg-gradient-to-r from-[#FA93FA] to-[#983AD6] bg-clip-text text-transparent">Me</span>
+          </div>
+          <button
+            onClick={toggleFullscreen}
+            className="p-3 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-all"
+          >
+            <Minimize size={20} />
+          </button>
+        </div>
+      )}
+
       {/* Timer Display */}
-      <div className="relative w-80 h-80">
+      <div className={`relative ${isFullscreen ? 'w-96 h-96' : 'w-80 h-80'}`}>
         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 300 300">
           <circle
             cx="150"
@@ -142,7 +235,7 @@ export function CountdownTimer({
         </svg>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          {showTimeInput ? (
+          {showTimeInput && !isFullscreen ? (
             <div className="flex items-center gap-2">
               {/* Hours */}
               <div className="flex flex-col items-center">
@@ -210,11 +303,11 @@ export function CountdownTimer({
             </div>
           ) : (
             <>
-              <span className="text-5xl font-light tracking-tight text-white tabular-nums">
+              <span className={`font-light tracking-tight text-white tabular-nums ${isFullscreen ? 'text-8xl' : 'text-5xl'}`}>
                 {displayHours > 0 && `${formatDisplay(displayHours)}:`}
                 {formatDisplay(displayMinutes)}:{formatDisplay(displaySeconds)}
               </span>
-              <span className="text-sm text-zinc-500 mt-2 uppercase tracking-widest">
+              <span className={`text-zinc-500 mt-2 uppercase tracking-widest ${isFullscreen ? 'text-base' : 'text-sm'}`}>
                 {isCompleted ? 'Complete!' : isRunning ? 'Counting Down' : 'Paused'}
               </span>
             </>
@@ -223,7 +316,7 @@ export function CountdownTimer({
       </div>
 
       {/* Preset buttons */}
-      {showTimeInput && (
+      {showTimeInput && !isFullscreen && (
         <div className="flex gap-2 mt-4">
           {[
             { label: '1m', h: 0, m: 1, s: 0 },
@@ -273,6 +366,54 @@ export function CountdownTimer({
 
         <div className="w-14" /> {/* Spacer for symmetry */}
       </div>
+
+      {/* Fullscreen & Shortcuts buttons */}
+      <div className={`flex items-center gap-3 ${isFullscreen ? 'mt-10' : 'mt-6'}`}>
+        {!isFullscreen && (
+          <button
+            onClick={toggleFullscreen}
+            className="flex items-center gap-2 px-4 py-2 bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white rounded-lg transition-all text-sm"
+          >
+            <Maximize size={16} />
+            Focus Mode
+          </button>
+        )}
+        <button
+          onClick={() => setShowShortcuts(prev => !prev)}
+          className="flex items-center gap-2 px-4 py-2 bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-white rounded-lg transition-all text-sm"
+        >
+          <Keyboard size={16} />
+          Shortcuts
+        </button>
+      </div>
+
+      {/* Keyboard shortcuts help */}
+      {showShortcuts && (
+        <div className={`mt-4 p-4 bg-zinc-800/50 rounded-xl border border-zinc-700 ${isFullscreen ? 'text-base' : 'text-sm'}`}>
+          <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-zinc-400">
+            <div className="flex items-center gap-3">
+              <kbd className="px-2 py-1 bg-zinc-700 rounded text-xs text-white">Space</kbd>
+              <span>Start / Pause</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <kbd className="px-2 py-1 bg-zinc-700 rounded text-xs text-white">R</kbd>
+              <span>Reset</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <kbd className="px-2 py-1 bg-zinc-700 rounded text-xs text-white">F</kbd>
+              <span>Fullscreen</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <kbd className="px-2 py-1 bg-zinc-700 rounded text-xs text-white">Esc</kbd>
+              <span>Exit Fullscreen</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <kbd className="px-2 py-1 bg-zinc-700 rounded text-xs text-white">?</kbd>
+              <span>Toggle Help</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
