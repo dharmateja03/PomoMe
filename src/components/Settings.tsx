@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Settings as SettingsIcon, Volume2, VolumeX, Clock, RotateCcw, Play } from 'lucide-react';
-import { type Settings as SettingsType, DURATION_PRESETS } from '@/hooks/useSettings';
+import { X, Settings as SettingsIcon, Volume2, VolumeX, Clock, RotateCcw, Play, Globe } from 'lucide-react';
+import { type Settings as SettingsType, DURATION_PRESETS, TIMEZONE_OPTIONS } from '@/hooks/useSettings';
 import { playSound, type SoundType } from '@/lib/sounds';
 
 const SOUND_OPTIONS = [
@@ -172,6 +172,28 @@ export function Settings({ settings, onUpdate, onReset, onClose }: SettingsProps
                 </button>
               </>
             )}
+          </div>
+
+          {/* Timezone Settings */}
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-zinc-400 mb-3">
+              <Globe size={16} />
+              Timezone
+            </label>
+            <select
+              value={settings.timezone}
+              onChange={e => onUpdate({ timezone: e.target.value })}
+              className="w-full px-4 py-2.5 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/50 cursor-pointer"
+            >
+              {TIMEZONE_OPTIONS.map(tz => (
+                <option key={tz.id} value={tz.id}>
+                  {tz.name} ({tz.offset})
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-zinc-500 mt-2">
+              Current timezone used for clock display
+            </p>
           </div>
         </div>
 

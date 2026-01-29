@@ -7,6 +7,7 @@ export interface Settings {
   soundEnabled: boolean;
   soundVolume: number; // 0-100
   selectedSound: string;
+  timezone: string; // IANA timezone identifier
 }
 
 const DEFAULT_SETTINGS: Settings = {
@@ -14,7 +15,25 @@ const DEFAULT_SETTINGS: Settings = {
   soundEnabled: true,
   soundVolume: 80,
   selectedSound: 'bell',
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 };
+
+export const TIMEZONE_OPTIONS = [
+  { id: 'America/Los_Angeles', name: 'Pacific Time (PT)', offset: 'UTC-8' },
+  { id: 'America/Denver', name: 'Mountain Time (MT)', offset: 'UTC-7' },
+  { id: 'America/Chicago', name: 'Central Time (CT)', offset: 'UTC-6' },
+  { id: 'America/New_York', name: 'Eastern Time (ET)', offset: 'UTC-5' },
+  { id: 'America/Sao_Paulo', name: 'Brasília Time', offset: 'UTC-3' },
+  { id: 'Europe/London', name: 'London (GMT)', offset: 'UTC+0' },
+  { id: 'Europe/Paris', name: 'Central European', offset: 'UTC+1' },
+  { id: 'Europe/Moscow', name: 'Moscow Time', offset: 'UTC+3' },
+  { id: 'Asia/Dubai', name: 'Dubai Time', offset: 'UTC+4' },
+  { id: 'Asia/Kolkata', name: 'India Standard Time', offset: 'UTC+5:30' },
+  { id: 'Asia/Shanghai', name: 'China Standard Time', offset: 'UTC+8' },
+  { id: 'Asia/Tokyo', name: 'Japan Standard Time', offset: 'UTC+9' },
+  { id: 'Australia/Sydney', name: 'Sydney Time', offset: 'UTC+11' },
+  { id: 'Pacific/Auckland', name: 'New Zealand Time', offset: 'UTC+13' },
+];
 
 const STORAGE_KEY = 'pomodo-me-settings';
 

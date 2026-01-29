@@ -3,8 +3,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
-import { Clock, BarChart3, Sparkles, LogOut, Loader2, Settings as SettingsIcon, Users, UserPlus } from 'lucide-react';
+import { Clock, BarChart3, Sparkles, LogOut, Loader2, Settings as SettingsIcon, Users, UserPlus, Timer as TimerIcon, Hourglass, Play } from 'lucide-react';
 import { Timer } from '@/components/Timer';
+import { Stopwatch } from '@/components/Stopwatch';
+import { CountdownTimer } from '@/components/CountdownTimer';
+import { CurrentTime } from '@/components/CurrentTime';
 import { CategorySelector } from '@/components/CategorySelector';
 import { ProgressMeter } from '@/components/ProgressMeter';
 import { History } from '@/components/History';
@@ -18,6 +21,8 @@ import { useApiCategories } from '@/hooks/useApiCategories';
 import { useApiSessions } from '@/hooks/useApiSessions';
 import { useSettings } from '@/hooks/useSettings';
 import { type Category } from '@/lib/db/schema';
+
+type TimerMode = 'pomodoro' | 'stopwatch' | 'timer';
 
 export default function Home() {
   const router = useRouter();
@@ -33,6 +38,7 @@ export default function Home() {
   const [showCreateRoom, setShowCreateRoom] = useState(false);
   const [showJoinRoom, setShowJoinRoom] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
+  const [timerMode, setTimerMode] = useState<TimerMode>('pomodoro');
 
   // Auto-select first category if none selected
   useEffect(() => {
@@ -135,10 +141,7 @@ export default function Home() {
                 <UserPlus size={18} />
               </button>
             </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10">
-              <Sparkles size={14} className="text-[#C967E8]" />
-              <span className="text-sm text-zinc-400">Focus Timer</span>
-            </div>
+            <CurrentTime timezone={settings.timezone} />
             <button
               onClick={handleSignOut}
               className="p-2 text-zinc-500 hover:text-white hover:bg-white/5 rounded-lg transition-all"
@@ -205,31 +208,80 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Category Selector */}
-        <div className="mb-10">
-          <CategorySelector
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onSelect={setSelectedCategory}
-            onAdd={handleAddCategory}
-            onDelete={handleDeleteCategory}
-          />
+        {/* Timer Mode Selector */}
+        <div className="flex justify-center gap-2 mb-8">
+          <button
+            onClick={() => setTimerMode('pomodoro')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+              timerMode === 'pomodoro'
+                ? 'bg-gradient-to-r from-[#FA93FA] via-[#C967E8] to-[#983AD6] text-white shadow-lg shadow-[#983AD6]/25'
+                : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/10'
+            }`}
+          >
+            <TimerIcon size={16} />
+            Pomodoro
+          </button>
+          <button
+            onClick={() => setTimerMode('stopwatch')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+              timerMode === 'stopwatch'
+                ? 'bg-gradient-to-r from-green-500 to-cyan-500 text-white shadow-lg shadow-green-500/25'
+                : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/10'
+            }`}
+          >
+            <Play size={16} />
+            Stopwatch
+          </button>
+          <button
+            onClick={() => setTimerMode('timer')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+              timerMode === 'timer'
+                ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow-lg shadow-violet-500/25'
+                : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/10'
+            }`}
+          >
+            <Hourglass size={16} />
+            Timer
+          </button>
         </div>
 
-        {/* Timer */}
+        {/* Category Selector - only for Pomodoro mode */}
+        {timerMode === 'pomodoro' && (
+          <div className="mb-10">
+            <CategorySelector
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onSelect={setSelectedCategory}
+              onAdd={handleAddCategory}
+              onDelete={handleDeleteCategory}
+            />
+          </div>
+        )}
+
+        {/* Timer Components */}
         <div className="mb-10">
-          <Timer
-            onComplete={handleSessionComplete}
-            isDisabled={!selectedCategory}
-            durationMinutes={settings.timerDuration}
-            soundEnabled={settings.soundEnabled}
-            soundVolume={settings.soundVolume}
-            selectedSound={settings.selectedSound}
-          />
+          {timerMode === 'pomodoro' && (
+            <Timer
+              onComplete={handleSessionComplete}
+              isDisabled={!selectedCategory}
+              durationMinutes={settings.timerDuration}
+              soundEnabled={settings.soundEnabled}
+              soundVolume={settings.soundVolume}
+              selectedSound={settings.selectedSound}
+            />
+          )}
+          {timerMode === 'stopwatch' && <Stopwatch />}
+          {timerMode === 'timer' && (
+            <CountdownTimer
+              soundEnabled={settings.soundEnabled}
+              soundVolume={settings.soundVolume}
+              selectedSound={settings.selectedSound}
+            />
+          )}
         </div>
 
-        {/* Progress Meter */}
-        {selectedCategory && (
+        {/* Progress Meter - only for Pomodoro mode */}
+        {timerMode === 'pomodoro' && selectedCategory && (
           <div className="mb-10">
             <ProgressMeter
               category={selectedCategory}
